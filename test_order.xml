@@ -1,0 +1,8 @@
+<testsuite>
+    <test>tests/ui_tests/test_login.py</test>
+    <test>tests/ui_tests/test_repository.py</test>
+    <test>tests/ui_tests/test_issues.py</test>
+    <test>tests/ui_tests/test_pull_request.py</test>
+    <test>tests/ui_tests/test_navigation.py</test>
+</testsuite>
+

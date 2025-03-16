@@ -1,0 +1,40 @@
+name: UI Test Automation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-ui-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Tests & Generate Reports
+        run: python run_tests.py
+
+      - name: Upload Pytest-HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pytest-HTML-Report
+          path: reports/latest_report.html
+
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Allure-Results
+          path: reports/allure-results/
