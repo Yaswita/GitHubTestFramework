@@ -1,0 +1,3 @@
+
+🔹 Running: test_unauthorized_action
+✅ Passed: Unauthorized action correctly rejected

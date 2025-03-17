@@ -1,0 +1,4 @@
+
+🔹 Running: test_private_repository_invalid_token
+{'message': 'Bad credentials', 'documentation_url': 'https://docs.github.com/rest', 'status': '401'}
+✅ Passed: Private repo is inaccessible with invalid token

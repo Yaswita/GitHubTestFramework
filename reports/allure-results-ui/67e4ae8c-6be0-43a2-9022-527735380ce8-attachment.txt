@@ -1,0 +1,3 @@
+
+🔹 Running: test_delete_private_repository
+✅ Passed: Private repository deleted
