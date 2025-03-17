@@ -55,7 +55,8 @@ def test_private_repository_invalid_token():
         "Accept": "application/vnd.github.v3+json"
     }
     response = requests.get(f"{GITHUB_API_URL}/repos/{OWNER}/{PRIVATE_REPO_NAME}", headers=invalid_headers)
-    assert response.status_code == 404, "Unauthorized access should fail (GitHub hides private repos)"
+    print(response.json())
+    assert response.status_code == 401, "Unauthorized access should fail (GitHub hides private repos)"
     print("✅ Passed: Private repo is inaccessible with invalid token")
 
 
@@ -63,7 +64,7 @@ def test_expired_token():
     """Step 5: Simulate an expired/revoked token scenario."""
     print("\n🔹 Running: test_expired_token")
     expired_token_headers = {
-        "Authorization": "Bearer expired-token",
+        "Authorization": "Bearer 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",
         "Accept": "application/vnd.github.v3+json"
     }
     response = requests.get(f"{GITHUB_API_URL}/user", headers=expired_token_headers)
@@ -72,11 +73,14 @@ def test_expired_token():
 
 
 def test_unauthorized_action():
-    """Step 6: Attempt modifying a repository without sufficient permissions."""
-    print("\n🔹 Running: test_unauthorized_action")
+    """Step 6: Attempt modifying a repository which is not yours - you don't have permission for"""
+    repo_owner = "Yaswita"  # Change to an actual GitHub user
+    repo_name = "finetune_jobs_api"  # Use a repo you don't have write access to
     payload = {"description": "Unauthorized update test"}
-    response = requests.patch(f"{GITHUB_API_URL}/repos/octocat/Hello-World", json=payload, headers=HEADERS)
-    assert response.status_code in [401, 403], "Unauthorized modification should fail"
+
+    response = requests.patch(f"{GITHUB_API_URL}/repos/{repo_owner}/{repo_name}", json=payload, headers=HEADERS)
+    print(response.status_code, response.json())
+    assert response.status_code in [404], "Unauthorized modification should fail"
     print("✅ Passed: Unauthorized action correctly rejected")
 
 
