@@ -50,34 +50,23 @@ class pr_creation :
     def create_commit(self, branch_name):
         """Create a new commit in the given feature branch"""
         commit_message = "Adding a new feature"
-        commit_url = f"{GITHUB_API_URL}/repos/{OWNER}/{REPO_NAME}/git/commits"
+        url = f"{GITHUB_API_URL}/repos/{OWNER}/{REPO_NAME}/git/commits"
 
         base_sha = self.get_latest_commit_sha()
-        tree_sha = self.get_latest_tree_sha(base_sha)  # ✅ Fetch correct tree SHA
 
         payload = {
             "message": commit_message,
-            "tree": tree_sha,  # ✅ Use the tree SHA
+            "tree": base_sha,
             "parents": [base_sha]
         }
 
-        response = requests.post(commit_url, headers=HEADERS, json=payload)
+        response = requests.post(url, headers=HEADERS, json=payload)
         if response.status_code != 201:
             raise Exception(f"Failed to create commit: {response.text}")
 
         commit_sha = response.json()["sha"]
         self.update_branch(branch_name, commit_sha)
         return commit_sha
-
-    def get_latest_tree_sha(self, commit_sha):
-        """Fetch the latest tree SHA from the latest commit"""
-        url = f"{GITHUB_API_URL}/repos/{OWNER}/{REPO_NAME}/git/commits/{commit_sha}"
-        response = requests.get(url, headers=HEADERS)
-
-        if response.status_code != 200:
-            raise Exception(f"Failed to fetch tree SHA: {response.text}")
-
-        return response.json()["tree"]["sha"]  # ✅ Extract correct tree SHA
 
     def update_branch(self, branch_name, commit_sha):
         """Update the given branch with a new commit"""

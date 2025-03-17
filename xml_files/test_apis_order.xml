@@ -1,9 +1,9 @@
-<testsuite>
+<tests>
     <test>tests/api_tests/test_create_repository_api.py</test>
     <test>tests/api_tests/test_get_repository_api.py</test>
     <test>tests/api_tests/test_issues_api.py</test>
     <test>tests/api_tests/test_create_pull_request_api.py</test>
     <test>tests/api_tests/test_validate_pull_request_api.py</test>
     <test>tests/api_tests/test_authentication_api.py</test>
-</testsuite>
+</tests>
 

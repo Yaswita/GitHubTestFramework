@@ -19,20 +19,14 @@ def test_delete_repo():
 
         # Step 2: Check if the repository exists
         repo_page = RepositoryPage(driver)
-        repo_names = ["test-repo-api", "teat-repo", "private-repo-api"]
+        repo_name = "test-repo"
 
-        delete_count = 0
-        for repo_name in repo_names:
-            if repo_page.is_repository_present(repo_name):
-                print(f"Repository '{repo_name}' already exists. Proceeding with deletion.")
-                time.sleep(2)
-                repo_page.navigate_to_repository(repo_name)
-                time.sleep(2)
-                base_page.delete_repo()
-                delete_count += 1
-
-        if delete_count == 0:
-            print("No matching repositories found.")
+        if repo_page.is_repository_present(repo_name):
+            print(f"Repository '{repo_name}' already exists. Proceeding with tests.")
+            time.sleep(2)
+            repo_page.navigate_to_repository(repo_name)
+            time.sleep(2)
+            base_page.delete_repo()
 
     except:
         None

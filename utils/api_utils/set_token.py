@@ -43,12 +43,13 @@ def retrieve_token():
 
         credentials = win32cred.CredRead(service_name, win32cred.CRED_TYPE_GENERIC)
         if credentials:
-            return credentials["CredentialBlob"].decode("utf-16").strip()  # ✅ Decode properly
+            return credentials["CredentialBlob"]  # No decoding needed
 
     else:  # macOS & Linux
         return keyring.get_password(service_name, account_name)
 
     return None  # If token is not found
+
 
 if __name__ == "__main__":
     token_input = input("Enter your GitHub Token: ").strip()
