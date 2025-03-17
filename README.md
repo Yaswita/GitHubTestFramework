@@ -4,17 +4,19 @@ This framework provides automated testing for GitHub using both UI and API appro
 
 ## Pre-Conditions
 
-1. Sign in to your GitHub user account
-2. Install required dependencies:
+1. Set-up an IDE (Pycharm or VS code)
+2. Clone this repository and set up the environment 
+3. Sign in to GitHub user account - which will be used for testing
+4. Install required dependencies:
    ```
    pip install -r requirements.txt
    ```
-3. Run the credential setup:
+5. Run the credential setup:
    ```
    python utils/set_credential.py
    ```
    Enter your GitHub username and password when prompted (one-time entry, stored in credentials manager)
-4. Set up your GitHub access token:
+6. Set up your GitHub access token:
    ```
    python utils/api_utils/set_token.py
    ```
