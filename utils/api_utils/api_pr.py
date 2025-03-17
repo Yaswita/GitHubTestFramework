@@ -52,14 +52,26 @@ class pr_creation :
         commit_message = "Adding a new feature"
         url = f"{GITHUB_API_URL}/repos/{OWNER}/{REPO_NAME}/git/commits"
 
+        # Get the latest commit SHA (this returns a commit object)
         base_sha = self.get_latest_commit_sha()
 
+        # Fetch the latest commit details to get the tree SHA
+        commit_details_url = f"{GITHUB_API_URL}/repos/{OWNER}/{REPO_NAME}/git/commits/{base_sha}"
+        response = requests.get(commit_details_url, headers=HEADERS)
+        if response.status_code != 200:
+            raise Exception(f"Failed to fetch commit details: {response.text}")
+
+        # Extract the tree SHA from the latest commit details
+        tree_sha = response.json()["tree"]["sha"]
+
+        # Prepare the commit payload with the correct tree SHA
         payload = {
             "message": commit_message,
-            "tree": base_sha,
-            "parents": [base_sha]
+            "tree": tree_sha,  # Use the tree SHA here
+            "parents": [base_sha]  # Use the commit SHA as a parent
         }
 
+        # Create the commit
         response = requests.post(url, headers=HEADERS, json=payload)
         if response.status_code != 201:
             raise Exception(f"Failed to create commit: {response.text}")

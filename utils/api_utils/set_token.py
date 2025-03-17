@@ -21,7 +21,7 @@ def store_token(token):
             "Type": win32cred.CRED_TYPE_GENERIC,
             "TargetName": service_name,
             "UserName": account_name,
-            "CredentialBlob": token,  # Pass as string, NOT bytes
+            "CredentialBlob": token,
             "Persist": win32cred.CRED_PERSIST_LOCAL_MACHINE
         }
         win32cred.CredWrite(credential, 0)
@@ -41,9 +41,20 @@ def retrieve_token():
         if not win32cred:
             raise ImportError("win32cred module not found. Install with `pip install pywin32`")
 
-        credentials = win32cred.CredRead(service_name, win32cred.CRED_TYPE_GENERIC)
+        credentials = win32cred.CredRead(service_name, win32cred.CRED_TYPE_GENERIC, 0)
         if credentials:
-            return credentials["CredentialBlob"]  # No decoding needed
+            # Handle UTF-16 encoded string (strip null bytes)
+            raw_blob = credentials["CredentialBlob"]
+            if isinstance(raw_blob, str):
+                return raw_blob
+            elif isinstance(raw_blob, bytes):
+                # Try decoding as UTF-16 and removing null bytes
+                if b'\x00' in raw_blob:
+                    # This is likely UTF-16 encoded
+                    return raw_blob.decode('utf-16-le')
+                else:
+                    # Regular UTF-8
+                    return raw_blob.decode('utf-8')
 
     else:  # macOS & Linux
         return keyring.get_password(service_name, account_name)
