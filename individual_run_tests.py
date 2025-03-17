@@ -4,14 +4,14 @@ import xml.etree.ElementTree as ET
 import datetime
 
 # Ensure reports directory exists
-report_dir = "reports"
+report_dir = "../reports"
 if not os.path.exists(report_dir):
     os.makedirs(report_dir)
 
 
 # Read test order from XML file
 def get_test_order():
-    xml_file = "test_order.xml"
+    xml_file = "xml_files/test_order.xml"
     if not os.path.exists(xml_file):
         raise FileNotFoundError(f"Test order file '{xml_file}' not found!")
 

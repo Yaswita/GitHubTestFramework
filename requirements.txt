@@ -5,3 +5,6 @@ pytest-html
 requests
 python-dotenv
 configparser
+keyring
+allure-pytest
+junitparser

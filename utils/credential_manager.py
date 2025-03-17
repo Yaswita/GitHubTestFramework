@@ -1,6 +1,4 @@
 import keyring
-import getpass
-
 
 def set_credentials(service):
     """
