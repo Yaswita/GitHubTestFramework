@@ -50,7 +50,7 @@ python test_delete_repo.py
 
 ## Test Reports
 
-The test execution reports for UI can be found [here](reports/ui_test_report_2025-03-17_10-58-54.html)
-The test execution reports for API can be found [here](reports/api_test_report_2025-03-17_12-21-32.html)
+1. The test execution reports for UI can be found [here](reports/ui_test_report_2025-03-17_10-58-54.html)
+2. The test execution reports for API can be found [here](reports/api_test_report_2025-03-17_12-21-32.html)
 
 Download and open them in browser 
