@@ -1,3 +1,5 @@
+import os
+
 import pytest
 import requests
 from utils.api_utils.api_client import GitHubAPI
@@ -63,8 +65,9 @@ def test_private_repository_invalid_token():
 def test_expired_token():
     """Step 5: Simulate an expired/revoked token scenario."""
     print("\n🔹 Running: test_expired_token")
+    EXPIRED_TOKEN = os.getenv("EXPIRED_GITHUB_TOKEN")
     expired_token_headers = {
-        "Authorization": "Bearer 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",
+        "Authorization": F"Bearer {EXPIRED_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
     }
     response = requests.get(f"{GITHUB_API_URL}/user", headers=expired_token_headers)
