@@ -77,8 +77,8 @@ def test_expired_token():
 
 def test_unauthorized_action():
     """Step 6: Attempt modifying a repository which is not yours - you don't have permission for"""
-    repo_owner = "Yaswita"  # Change to an actual GitHub user
-    repo_name = "finetune_jobs_api"  # Use a repo you don't have write access to
+    repo_owner = "abc"
+    repo_name = "babc"
     payload = {"description": "Unauthorized update test"}
 
     response = requests.patch(f"{GITHUB_API_URL}/repos/{repo_owner}/{repo_name}", json=payload, headers=HEADERS)
